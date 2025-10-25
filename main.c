@@ -9,7 +9,7 @@
 #define MAX_NAME 50
 
 
-
+// vehicle structure
 typedef struct{
 char type[10];
 int capacity;
@@ -18,28 +18,80 @@ float ratePerKm;
 float fuelEfficiency;
 }vehicle;
 
+// delivery strucutre
+typedef struct {
+    int id;
+    char source[MAX_NAME];
+    char destination[MAX_NAME];
+    float weight;
+    char vehicleType[10];
+    float distance;
+    float baseCost;
+    float fuelUsed;
+    float fuelCost;
+    float operationalCost;
+    float profit;
+    float customerCharge;
+    float deliveryTime;
+    int completed;
+} Delivery;
 
 
-
+//global variables
 char city[MAX_CITY][MAX_NAME];
-int distances[MAX_CITY][MAX_CITY];
+int distance[MAX_CITY][MAX_CITY];
 vehicle vehicles[3];
 int cityCount = 0;
 int deliveryCount = 0;
 
+
+//phototyoes
+void initializeSystem();
 void mainMenu();
 void cityManagement();
+void distanceManagement();
 
 
 void addCity ();
 void removeCity();
 void renameCity();
 void displayCity();
+int findCity (char cityName[]);
+void updateDistance();
+void displayDistanceMatrix();
 
 
 int main()
 {
 
+}
+
+void initializeSystem() {
+    // Initialize vehicles
+    strcpy(vehicles[0].type, "Van");
+    vehicles[0].capacity = 1000;
+    vehicles[0].ratePerKm = 30.0;
+    vehicles[0].avgSpeed = 60.0;
+    vehicles[0].fuelEfficiency = 12.0;
+
+    strcpy(vehicles[1].type, "Truck");
+    vehicles[1].capacity = 5000;
+    vehicles[1].ratePerKm = 40.0;
+    vehicles[1].avgSpeed = 50.0;
+    vehicles[1].fuelEfficiency = 6.0;
+
+    strcpy(vehicles[2].type, "Lorry");
+    vehicles[2].capacity = 10000;
+    vehicles[2].ratePerKm = 80.0;
+    vehicles[2].avgSpeed = 45.0;
+    vehicles[2].fuelEfficiency = 4.0;
+
+    // Initialize distance matrix with -1 (unset distances)
+    for(int i = 0; i < MAX_CITY; i++) {
+        for(int j = 0; j < MAX_CITY; j++) {
+            distance[i][j] = (i == j) ? 0 : -1;
+        }
+    }
 }
 void mainMenu()
 {
@@ -47,6 +99,7 @@ void mainMenu()
     printf("     LOGISTICS MANAGEMENT SYSTEM\n");
     printf("\n=======================================\n");
     printf("1. City Management\n");
+
 
 
 
@@ -67,16 +120,16 @@ void cityManagement()
         scanf("%d",&choice );
 
         switch(choice)
-    case 1 :
+    case 1 : addCity();
                 break ;
 
-    case 2 :
+    case 2 :removeCity();
                 break ;
 
-    case 3 :
+    case 3 :renameCity();
                 break ;
 
-    case 4 :
+    case 4 :displayCities();
                 break ;
 
     case 5 :
@@ -200,4 +253,44 @@ void displayCity()
         printf("%d. %s\n", i + 1, city[i]);
     }
 }
+
+
+int findCity (char cityName[])
+{
+    for(int i = 0; i < cityCount; i++) {
+        if(strcmp(city[i], cityName) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+void distanceManagement() {
+    int choice;
+    do {
+        printf("\n--- Distance Management ---\n");
+        printf("1. Update Distance\n");
+        printf("2. Display Distance Matrix\n");
+        printf("3. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: updateDistance(); break;
+            case 2: displayDistanceMatrix(); break;
+            case 3: break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 3);
+}
+
+
+
+
+
+
+
+
+
 
