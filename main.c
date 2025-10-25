@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 
 #define MAX_CITY 30
@@ -32,6 +34,7 @@ void cityManagement();
 void addCity ();
 void removeCity();
 void renameCity();
+void displayCity();
 
 
 int main()
@@ -185,3 +188,16 @@ void renameCity()
     strcpy(city[index], newName);
     printf("City renamed successfully!\n");
     }
+void displayCity()
+ {
+    if(cityCount == 0) {
+        printf("No cities available!\n");
+        return;
+    }
+
+    printf("\n--- Available Cities ---\n");
+    for(int i = 0; i < cityCount; i++) {
+        printf("%d. %s\n", i + 1, city[i]);
+    }
+}
+
