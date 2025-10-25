@@ -53,7 +53,7 @@ void cityManagement();
 void distanceManagement();
 void vehicleManagement();
 void deliveryRequest();
-
+void findLeastCostRoute();
 
 
 void addCity ();
@@ -65,6 +65,7 @@ void displayDistanceMatrix();
 int findCityIndex(char cityName[]);
 void calculateDeliveries(int source, int destination, float weight, int vehicleType);
 void displayDeliveries(int deliveryIndex);
+void bruteForceRoute(int start, int end, float weight, int vehicleType);
 
 
 
@@ -498,7 +499,54 @@ void displayDeliveries(int deliveryIndex) {
     printf("==============================================================\n");
 }
 
+void findLeastCostRoute() {
+    if(cityCount < 2) {
+        printf("Need at least 2 cities!\n");
+        return;
+    }
 
+    displayCity();
+    char source[MAX_NAME], destination[MAX_NAME];
+    float weight;
+    int vehicle_choice;
+
+    printf("Enter source city: ");
+    scanf("%s", source);
+    printf("Enter destination city: ");
+    scanf("%s", destination);
+
+    int source_index = findCityIndex(source);
+    int dest_index = findCityIndex(destination);
+
+    if(source_index == -1 || dest_index == -1) {
+        printf("One or both cities not found!\n");
+        return;
+    }
+
+    if(source_index == dest_index) {
+        printf("Source and destination cannot be the same!\n");
+        return;
+    }
+
+    printf("Enter package weight (kg): ");
+    scanf("%f", &weight);
+
+    if(weight <= 0) {
+        printf("Weight must be positive!\n");
+        return;
+    }
+
+    vehicleManagement();
+    printf("Select vehicle type (1=Van, 2=Truck, 3=Lorry): ");
+    scanf("%d", &vehicle_choice);
+
+    if(vehicle_choice < 1 || vehicle_choice > 3) {
+        printf("Invalid vehicle choice!\n");
+        return;
+    }
+
+    bruteForceRoute(source_index, dest_index, weight, vehicle_choice - 1);
+}
 
 
 
