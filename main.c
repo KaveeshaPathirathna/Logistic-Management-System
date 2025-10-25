@@ -50,16 +50,15 @@ void initializeSystem();
 void mainMenu();
 void cityManagement();
 void distanceManagement();
+void vehicleManagement();
 
 
 void addCity ();
 void removeCity();
 void renameCity();
 void displayCity();
-int findCity (char cityName[]);
 void updateDistance();
 void displayDistanceMatrix();
-
 int findCityIndex(char cityName[]);
 
 int main()
@@ -121,23 +120,6 @@ void cityManagement()
         scanf("%d",&choice );
 
         switch(choice)
-    case 1 : addCity();
-                break ;
-
-    case 2 :removeCity();
-                break ;
-
-    case 3 :renameCity();
-                break ;
-
-    case 4 :displayCities();
-                break ;
-
-    case 5 :
-                break ;
-
-    default :
-        printf("Invalid choice!\n");
         {
             case 1: addCity(); break;
             case 2: removeCity(); break;
@@ -206,6 +188,8 @@ for (int i = index; i < cityCount - 1 ; i++)
 
     for (int j = 0 ; j < cityCount ; j++)
     {
+        distance[i][j] = distance[i +1][j];
+        distance[j][i] = distance [j][i + 1];
     }
 }
 
@@ -262,7 +246,6 @@ void displayCity()
 }
 
 
-int findCity (char cityName[])
 int findCityIndex (char cityName[])
 {
     for(int i = 0; i < cityCount; i++) {
@@ -359,7 +342,19 @@ void displayDistanceMatrix() {
     }
 }
 
+void vehicleManagement()
+{
+    printf("\n--- Vehicle Information ---\n");
+    printf("%-10s %-12s %-15s %-12s %-15s\n",
+           "Type", "Capacity(kg)", "Rate/km(LKR)", "Speed(km/h)", "Efficiency(km/l)");
+    printf("----------------------------------------------------------------\n");
 
+    for(int i = 0; i < 3; i++) {
+        printf("%-10s %-12d %-15.2f %-12.2f %-15.2f\n",
+               vehicles[i].type, vehicles[i].capacity, vehicles[i].ratePerKm,
+               vehicles[i].avgSpeed, vehicles[i].fuelEfficiency);
+    }
+}
 
 
 
