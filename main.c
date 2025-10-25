@@ -30,6 +30,8 @@ void cityManagement();
 
 
 void addCity ();
+void removeCity();
+void renameCity();
 
 
 int main()
@@ -111,3 +113,75 @@ void addCity ()
     cityCount++;
     printf("City '%s' added successfully!\n", cityName);
 }
+void removeCity()
+{
+if (cityCount==0)
+{
+    printf("No cities available ! \n");
+    return ;
+
+}
+displayCity();
+char cityName [MAX_NAME];
+printf("Enter city name to remove : ");
+scanf("%s" , cityName);
+
+int index = findCityIndex (cityName);
+if (index == -1)
+{
+    printf("City not found ! \n");
+    return ;
+}
+//remove city and shift array
+
+for (int i = index; i < cityCount - 1 ; i++)
+{
+    strcpy (city[i], city[i+1]);
+    //shift distance matrix
+
+    for (int j = 0 ; j < cityCount ; j++)
+    {
+        distances[i][j] = distances[i +1][j];
+        distances[j][i] = distances [j][i + 1];
+    }
+}
+
+cityCount--;
+printf("City '%s' removed successfully!\n " , cityName);
+
+}
+
+void renameCity()
+{
+    if (cityCount == 0)
+    {
+        printf("No cities available ! \n");
+        return ;
+    }
+
+    displayCity();
+    char oldName[MAX_NAME], newName[MAX_NAME];
+    printf("Enter current city name : ");
+    scanf("%s", oldName);
+
+    int index = findCityIndex(oldName);
+    if(index == -1)
+    {
+        printf("City not found !\n");
+        return ;
+    }
+      printf("Enter new city name : ");
+      scanf("%s", newName);
+
+
+        for (int i = 0 ; i < cityCount ; i++)
+        {
+            if(i != index && strcmp (city[i], newName)== 0 )
+            {
+                printf("City name already exists!\n");
+                return ;
+            }
+        }
+    strcpy(city[index], newName);
+    printf("City renamed successfully!\n");
+    }
