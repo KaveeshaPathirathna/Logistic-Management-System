@@ -60,6 +60,7 @@ int findCity (char cityName[]);
 void updateDistance();
 void displayDistanceMatrix();
 
+int findCityIndex(char cityName[]);
 
 int main()
 {
@@ -137,7 +138,15 @@ void cityManagement()
 
     default :
         printf("Invalid choice!\n");
+        {
+            case 1: addCity(); break;
+            case 2: removeCity(); break;
+            case 3: renameCity(); break;
+            case 4: displayCity(); break;
+            case 5: break;
 
+            default :printf("Invalid choice!\n");
+        }
 
     }
     while (choice !=5);
@@ -197,8 +206,6 @@ for (int i = index; i < cityCount - 1 ; i++)
 
     for (int j = 0 ; j < cityCount ; j++)
     {
-        distances[i][j] = distances[i +1][j];
-        distances[j][i] = distances [j][i + 1];
     }
 }
 
@@ -256,6 +263,7 @@ void displayCity()
 
 
 int findCity (char cityName[])
+int findCityIndex (char cityName[])
 {
     for(int i = 0; i < cityCount; i++) {
         if(strcmp(city[i], cityName) == 0) {
@@ -284,6 +292,74 @@ void distanceManagement() {
         }
     } while(choice != 3);
 }
+void updateDistance() {
+    if(cityCount < 2) {
+        printf("Need at least 2 cities to set distances!\n");
+        return;
+    }
+
+    displayCity();
+    char city1[MAX_NAME], city2[MAX_NAME];
+    int distances;
+
+    printf("Enter first city: ");
+    scanf("%s", city1);
+    printf("Enter second city: ");
+    scanf("%s", city2);
+
+    int index1 = findCityIndex(city1);
+    int index2 = findCityIndex(city2);
+
+    if(index1 == -1 || index2 == -1) {
+        printf("One or both cities not found!\n");
+        return;
+    }
+
+    if(index1 == index2) {
+        printf("Distance from city to itself is always 0!\n");
+        return;
+    }
+
+    printf("Enter distance between %s and %s (km): ", city1, city2);
+    scanf("%d", &distances);
+
+    if(distances < 0) {
+        printf("Distance cannot be negative!\n");
+        return;
+    }
+
+    distance[index1][index2] = distances;
+    distance[index2][index1] = distances;
+    printf("Distance updated successfully!\n");
+}
+
+void displayDistanceMatrix() {
+    if(cityCount == 0) {
+        printf("No cities available!\n");
+        return;
+    }
+
+    printf("\n--- Distance Matrix (km) ---\n");
+    printf("%-15s", "");
+    for(int i = 0; i < cityCount; i++) {
+        printf("%-15s", city[i]);
+    }
+    printf("\n");
+
+    for(int i = 0; i < cityCount; i++) {
+        printf("%-15s", city[i]);
+        for(int j = 0; j < cityCount; j++) {
+            if(distance[i][j] == -1) {
+                printf("%-15s", "N/A");
+            } else {
+                printf("%-15d", distance[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+
 
 
 
