@@ -660,7 +660,45 @@ void operations() {
 }
 
 
+void saveData() {
+    FILE *city_file = fopen("cities.txt", "w");
+    FILE *distance_file = fopen("distances.txt", "w");
+    FILE *delivery_file = fopen("deliveries.txt", "w");
 
+    if(city_file) {
+        fprintf(city_file, "%d\n", cityCount);
+        for(int i = 0; i < cityCount; i++) {
+            fprintf(city_file, "%s\n", city[i]);
+        }
+        fclose(city_file);
+    }
+
+    if(distance_file) {
+        fprintf(distance_file, "%d\n", cityCount);
+        for(int i = 0; i < cityCount; i++) {
+            for(int j = 0; j < cityCount; j++) {
+                fprintf(distance_file, "%d ", distances[i][j]);
+            }
+            fprintf(distance_file, "\n");
+        }
+        fclose(distance_file);
+    }
+
+    if(delivery_file) {
+        fprintf(delivery_file, "%d\n", deliveryCount);
+        for(int i = 0; i < deliveryCount; i++) {
+            fprintf(delivery_file, "%d %s %s %.2f %s %.2f %.2f %.2f %.2f %.2f %.2f %.2f %d\n",
+                   deliveries[i].id, deliveries[i].source, deliveries[i].destination,
+                   deliveries[i].weight, deliveries[i].vehicleType, deliveries[i].distance,
+                   deliveries[i].baseCost, deliveries[i].fuelUsed, deliveries[i].fuelCost,
+                   deliveries[i].operationalCost, deliveries[i].profit, deliveries[i].customerCharge,
+                   deliveries[i].deliveryTime, deliveries[i].completed);
+        }
+        fclose(delivery_file);
+    }
+
+    printf("Data saved to files successfully!\n");
+}
 
 
 
