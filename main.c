@@ -700,6 +700,46 @@ void saveData() {
     printf("Data saved to files successfully!\n");
 }
 
+void loadData() {
+    FILE *city_file = fopen("cities.txt", "r");
+    FILE *distance_file = fopen("distances.txt", "r");
+    FILE *delivery_file = fopen("deliveries.txt", "r");
+
+    if(city_file) {
+        fscanf(city_file, "%d", &cityCount);
+        for(int i = 0; i < cityCount; i++) {
+            fscanf(city_file, "%s", city[i]);
+        }
+        fclose(city_file);
+    }
+
+    if(distance_file) {
+        int count;
+        fscanf(distance_file, "%d", &count);
+        for(int i = 0; i < count; i++) {
+            for(int j = 0; j < count; j++) {
+                fscanf(distance_file, "%d", &distances[i][j]);
+            }
+        }
+        fclose(distance_file);
+    }
+
+    if(delivery_file) {
+        fscanf(delivery_file, "%d", &deliveryCount);
+        for(int i = 0; i < deliveryCount; i++) {
+            fscanf(delivery_file, "%d %s %s %f %s %f %f %f %f %f %f %f %f %d",
+                   &deliveries[i].id, deliveries[i].source, deliveries[i].destination,
+                   &deliveries[i].weight, deliveries[i].vehicleType, &deliveries[i].distance,
+                   &deliveries[i].baseCost, &deliveries[i].fuelUsed, &deliveries[i].fuelCost,
+                   &deliveries[i].operationalCost, &deliveries[i].profit, &deliveries[i].customerCharge,
+                   &deliveries[i].deliveryTime, &deliveries[i].completed);
+        }
+        fclose(delivery_file);
+        printf("Data loaded from files successfully!\n");
+    }
+}
+
+
 
 
 
