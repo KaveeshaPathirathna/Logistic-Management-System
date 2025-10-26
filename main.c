@@ -55,6 +55,9 @@ void vehicleManagement();
 void deliveryRequest();
 void findLeastCostRoute();
 void reports();
+void operations();
+void saveData();
+void loadData();
 
 
 void addCity ();
@@ -635,6 +638,31 @@ void reports() {
     printf("Longest Route: %.2f km\n", max_distance);
     printf("Shortest Route: %.2f km\n", min_distance);
 }
+
+
+void operations() {
+    int choice;
+    do {
+        printf("\n--- File Operations ---\n");
+        printf("1. Save Data to Files\n");
+        printf("2. Load Data from Files\n");
+        printf("3. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: saveData(); break;
+            case 2: loadData(); break;
+            case 3: break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 3);
+}
+
+
+
+
+
 
 
 
