@@ -76,7 +76,40 @@ void bruteForceRoute(int start, int end, float weight, int vehicleType);
 
 int main()
 {
+ initializeSystem();
+    loadData();
 
+    int choice;
+    do {
+        mainMenu();
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: cityManagement();
+                break;
+            case 2: distanceManagement();
+                break;
+            case 3: vehicleManagement();
+                break;
+            case 4: deliveryRequest();
+                break;
+            case 5: findLeastCostRoute();
+                break;
+            case 6: reports();
+                break;
+            case 7: operations();
+                break;
+            case 8:
+                saveData();
+                printf("Data saved successfully!\n");
+                printf("Exiting system...\n");
+                break;
+            default: printf("Invalid choice! Please try again.\n");
+        }
+    } while(choice != 8);
+
+    return 0;
 }
 
 void initializeSystem() {
