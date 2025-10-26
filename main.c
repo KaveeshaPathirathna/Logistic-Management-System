@@ -54,6 +54,7 @@ void distanceManagement();
 void vehicleManagement();
 void deliveryRequest();
 void findLeastCostRoute();
+void reports();
 
 
 void addCity ();
@@ -593,7 +594,47 @@ void bruteForceRoute(int start, int end, float weight, int vehicle_type) {
     }
 }
 
+void reports() {
+    if(deliveryCount == 0) {
+        printf("No deliveries completed yet!\n");
+        return;
+    }
 
+    printf("\n--- PERFORMANCE REPORTS ---\n");
+
+    // Total deliveries
+    printf("Total Deliveries Completed: %d\n", deliveryCount);
+
+    // Total distance covered
+    float tot_distance = 0;
+    float tot_revenue = 0;
+    float tot_profit = 0;
+    float tot_time = 0;
+    float max_distance = 0;
+    float min_distance = -1;
+
+    for(int i = 0; i < deliveryCount; i++) {
+        tot_distance += deliveries[i].distance;
+        tot_revenue += deliveries[i].customerCharge;
+        tot_profit += deliveries[i].profit;
+        tot_time += deliveries[i].deliveryTime;
+
+        if(deliveries[i].distance > max_distance) {
+            max_distance = deliveries[i].distance;
+        }
+
+        if(min_distance == -1 || deliveries[i].distance < min_distance) {
+            min_distance = deliveries[i].distance;
+        }
+    }
+
+    printf("Total Distance Covered: %.2f km\n", tot_distance);
+    printf("Average Delivery Time: %.2f hours\n", tot_time / deliveryCount);
+    printf("Total Revenue: %.2f LKR\n", tot_revenue);
+    printf("Total Profit: %.2f LKR\n", tot_profit);
+    printf("Longest Route: %.2f km\n", max_distance);
+    printf("Shortest Route: %.2f km\n", min_distance);
+}
 
 
 
