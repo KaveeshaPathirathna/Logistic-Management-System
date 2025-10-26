@@ -145,7 +145,14 @@ void mainMenu()
     printf("     LOGISTICS MANAGEMENT SYSTEM\n");
     printf("\n=======================================\n");
     printf("1. City Management\n");
-
+    printf("2. Distance Management\n");
+    printf("3. Vehicle Information\n");
+    printf("4. Delivery Request\n");
+    printf("5. Find Least Cost Route\n");
+    printf("6. Finale Reports\n");
+    printf("7. File Operations\n");
+    printf("8. Exit\n");
+    printf("========================================\n");
 
 
 
@@ -156,7 +163,7 @@ void cityManagement()
     int choice;
 
     do {
-        printf("\n--- CITY MANAGMENT---");
+        printf("\n--- CITY MANAGMENT---\n");
         printf("1. Add City\n");
         printf("2. Remove City\n");
         printf("3. Rename City\n");
