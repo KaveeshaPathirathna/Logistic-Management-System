@@ -547,6 +547,54 @@ void findLeastCostRoute() {
 
     bruteForceRoute(source_index, dest_index, weight, vehicle_choice - 1);
 }
+void bruteForceRoute(int start, int end, float weight, int vehicle_type) {
+
+
+    printf("\n--- Route Optimization ---\n");
+    printf("Finding best route from %s to %s...\n", city[start], city[end]);
+
+    // Check direct route first
+    if(distances[start][end] != -1) {
+        printf("\nDirect Route:\n");
+        printf("%s -> %s: %d km\n", city[start], city[end], distances[start][end]);
+
+        // Calculate cost for direct route
+        float D = distances[start][end];
+        float R = vehicles[vehicle_type].ratePerKm;
+        float cost = D * R * (1 + weight / 10000.0);
+        printf("Estimated Cost: %.2f LKR\n", cost);
+    }
+
+    // Check for one intermediate city
+    printf("\nChecking routes with one intermediate city...\n");
+    float min_cost = -1;
+    int bes_inter = -1;
+
+    for(int i = 0; i < cityCount; i++) {
+        if(i != start && i != end && distances[start][i] != -1 && distances[i][end] != -1) {
+            float total_dist = distances[start][i] + distances[i][end];
+            float cost = total_dist * vehicles[vehicle_type].ratePerKm * (1 + weight / 10000.0);
+
+            printf("%s -> %s -> %s: %.2f km, Cost: %.2f LKR\n",
+                   city[start], city[i], city[end], total_dist, cost);
+
+            if(min_cost == -1 || cost < min_cost) {
+                min_cost = cost;
+                bes_inter = i;
+            }
+        }
+    }
+
+    if(bes_inter != -1) {
+        printf("\nBest route with one intermediate city:\n");
+        printf("%s -> %s -> %s\n", city[start], city[bes_inter], city[end]);
+        printf("Total Distance: %.2f km\n", distances[start][bes_inter] + distances[bes_inter][end]);
+        printf("Estimated Cost: %.2f LKR\n", min_cost);
+    }
+}
+
+
+
 
 
 
